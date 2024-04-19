@@ -3,87 +3,69 @@ package com.example.compose
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.sp
 
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            val painter = painterResource(id = R.drawable.steamnocchio)
-            val contentDescription = "This is a picture with SteamNocchio"
-            val title = "This is SteamNocchio"
-            
-            ImageCard(painter = painter, contentDescription = contentDescription, title = title)
-        }
-    }
-}
 
-@Composable
-fun ImageCard(
-    painter: Painter,
-    contentDescription: String,
-    title: String,
-    modifier: Modifier = Modifier
-){
-    Card (
-        modifier = modifier
-            .fillMaxWidth(0.5f)
-            .padding(16.dp),
-        shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 16.dp
+        val fontFamily = FontFamily(
+            Font(R.font.oswald_bold, FontWeight.Bold),
+            Font(R.font.oswald_extralight, FontWeight.ExtraLight),
+            Font(R.font.oswald_light, FontWeight.Light),
+            Font(R.font.oswald_medium, FontWeight.Medium),
+            Font(R.font.oswald_regular, FontWeight.Normal),
+            Font(R.font.oswald_semibold, FontWeight.SemiBold)
         )
-    ){
-        Box(modifier = Modifier.height(300.dp)){
-            Image(painter = painter,
-                contentDescription = contentDescription,
-                contentScale = ContentScale.Crop)
+        setContent {
+           Box(modifier = Modifier
+               .fillMaxSize()
+               .background(Color(0xFF101010))
+           ){
+               Text(
+                   text = buildAnnotatedString {
+                       withStyle(
+                           style = SpanStyle(
+                               color = Color.Green,
+                               fontSize = 55.sp
+                           )
+                       ){
+                           append("J")
+                       }
+                       append("etpack")
 
-            Box(modifier = Modifier
-                .fillMaxSize()
-                .background(
-                    Brush.verticalGradient(
-                        colors = listOf(
-                            Color.Transparent,
-                            Color.Black
-                        ),
-                        startY = 300f
-                    )
-                )
-            )
-
-            Box(modifier = Modifier
-                .fillMaxSize()
-                .padding(12.dp),
-                contentAlignment = Alignment.BottomStart
-            ){
-                Text(
-                    text = title,
-                    style = TextStyle(color = Color.White, fontSize = 15.sp)
-                )
-            }
+                       withStyle(
+                           style = SpanStyle(
+                               color = Color.Green,
+                               fontSize = 55.sp
+                           )
+                       ){
+                           append("C")
+                       }
+                       append("ompose")
+                   },
+                   color = Color.White,
+                   fontSize = 30.sp,
+                   fontFamily = fontFamily,
+                   textDecoration = TextDecoration.LineThrough
+               )
+           }
         }
     }
 }
+
+
