@@ -4,68 +4,61 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.unit.sp
+import kotlin.random.Random
 
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val fontFamily = FontFamily(
-            Font(R.font.oswald_bold, FontWeight.Bold),
-            Font(R.font.oswald_extralight, FontWeight.ExtraLight),
-            Font(R.font.oswald_light, FontWeight.Light),
-            Font(R.font.oswald_medium, FontWeight.Medium),
-            Font(R.font.oswald_regular, FontWeight.Normal),
-            Font(R.font.oswald_semibold, FontWeight.SemiBold)
-        )
         setContent {
-           Box(modifier = Modifier
-               .fillMaxSize()
-               .background(Color(0xFF101010))
-           ){
-               Text(
-                   text = buildAnnotatedString {
-                       withStyle(
-                           style = SpanStyle(
-                               color = Color.Green,
-                               fontSize = 55.sp
-                           )
-                       ){
-                           append("J")
-                       }
-                       append("etpack")
+            Column (modifier = Modifier.fillMaxSize()){
+                val color = remember {
+                    mutableStateOf(Color.Blue)
+                }
+                ColorBox(Modifier
+                    .weight(1f)
+                    .fillMaxSize()){
+                    color.value = it
+                }
 
-                       withStyle(
-                           style = SpanStyle(
-                               color = Color.Green,
-                               fontSize = 55.sp
-                           )
-                       ){
-                           append("C")
-                       }
-                       append("ompose")
-                   },
-                   color = Color.White,
-                   fontSize = 30.sp,
-                   fontFamily = fontFamily,
-                   textDecoration = TextDecoration.LineThrough
-               )
-           }
+                Box(modifier = Modifier
+                    .background(color.value) // <- the color that we get from our colorBox
+                    .weight(1f)
+                    .fillMaxSize()
+                )
+            }
         }
     }
+}
+
+@Composable
+fun ColorBox(
+    modifier: Modifier = Modifier,
+    updateColor: (Color) -> Unit
+){
+    Box(modifier = modifier
+        .background(Color.Red)
+        .clickable {
+            updateColor(
+                Color(
+                    Random.nextFloat(),
+                    Random.nextFloat(),
+                    Random.nextFloat(),
+                    1f
+                )
+            )
+        }
+    )
 }
 
 
