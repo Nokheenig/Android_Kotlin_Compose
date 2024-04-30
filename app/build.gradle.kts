@@ -96,4 +96,7 @@ dependencies {
     //implementation ("androidx.wear.compose:compose-material:1.3.1")
     //implementation ("androidx.wear.compose:compose-navigation:1.3.1")
     // NOTE: DO NOT INCLUDE androidx.compose.material:material
+
+
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
 }
