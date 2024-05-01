@@ -20,9 +20,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 
 @Composable
 fun Navigation() {
@@ -31,9 +33,18 @@ fun Navigation() {
         composable(route = Screen.MainScreen.route) {
             MainScreen(navController = navController)
         }
-        
-        composable(route = Screen.DetailScreen.route) {
-            DetailScreen(name = "")
+
+        composable(
+            route = Screen.DetailScreen.route + "/{name}",
+            listOf(
+                navArgument("name"){
+                    type = NavType.StringType
+                    defaultValue = "User"
+                    nullable = true
+                }
+            )
+        ) {backEntry ->
+            DetailScreen(name = backEntry.arguments?.getString("name"))
         }
     }
 }
@@ -60,7 +71,7 @@ fun MainScreen(navController: NavController) {
         Button(
             modifier = Modifier.align(Alignment.End),
             onClick = {
-                navController.navigate(Screen.DetailScreen.route)
+                navController.navigate(Screen.DetailScreen.withArgs(text))
             }
         ) {
             Text(text = "Go to Detail Screen",
